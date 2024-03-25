@@ -33,8 +33,12 @@ class NumberGuessingGameScreen extends StatefulWidget {
 class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
   final _random = Random();
   late int _targetNumber;
+  late int _maxNumber;
   int? _userGuess;
   String _resultText = '';
+  int _level = 1;
+  final int _attemptsPerLevel = 5;
+  int _remainingAttempts = 0;
 
   @override
   void initState() {
@@ -43,15 +47,25 @@ class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
   }
 
   void _startNewGame() {
-    _targetNumber = _random.nextInt(100) + 1;
+    _maxNumber = _maxNumberForLevel();
+    _targetNumber = _random.nextInt(_maxNumber) + 1;
     _userGuess = null;
-    _resultText = '';
+    _remainingAttempts = _attemptsPerLevel;
+  }
+
+  int _maxNumberForLevel() {
+    return 10 * _level;
   }
 
   void _checkGuess() {
     if (_userGuess != null) {
+      _remainingAttempts--;
       if (_userGuess == _targetNumber) {
         _resultText = 'Bravo! Vous avez deviné le bon nombre ($_targetNumber)';
+        _level++;
+        _startNewGame();
+      } else if (_remainingAttempts <= 0) {
+        _resultText = 'Vous avez épuisé toutes vos tentatives. Le bon nombre était $_targetNumber.';
       } else if (_userGuess! < _targetNumber) {
         _resultText = 'Le nombre est plus grand';
       } else {
@@ -68,9 +82,13 @@ class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'Devinez le nombre entre 1 et 100',
-              style: TextStyle(fontSize: 20.0),
+            Text(
+              'Niveau: $_level', // Afficher le niveau actuel
+              style: const TextStyle(fontSize: 20.0),
+            ),
+            Text(
+              'Devinez le nombre entre 1 et $_maxNumber. Essais restants: $_remainingAttempts',
+              style: const TextStyle(fontSize: 20.0),
             ),
             const SizedBox(height: 20.0),
             TextField(
@@ -96,15 +114,15 @@ class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
               _resultText,
               style: const TextStyle(fontSize: 20.0),
             ),
-            const SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _startNewGame();
-                });
-              },
-              child: const Text('Nouvelle Partie'),
-            ),
+            if (_remainingAttempts <= 0)
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _startNewGame();
+                  });
+                },
+                child: const Text('Nouvelle Partie'),
+              ),
           ],
         ),
       ),
