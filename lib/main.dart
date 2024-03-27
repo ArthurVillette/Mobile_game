@@ -7,9 +7,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,9 +17,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Android Game'),
       initialRoute: '/',
       routes: {
+        '/': (context) => const MyHomePage(title: 'Android Game'),
+        '/name': (context) => const NameEntryScreen(),
         '/jouer': (context) => const NumberGuessingGameScreen(),
         '/scores': (context) => const MyHomePage(title: 'Scores'),
         '/regles': (context) => const MyHomePage(title: 'Règles'),

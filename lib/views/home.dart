@@ -26,27 +26,6 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Jouer',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.orangeAccent,
-        unselectedItemColor: Colors.blueAccent,
-        backgroundColor: Colors.black,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-      ),
     );
   }
 }
@@ -65,7 +44,7 @@ class HomeScreen extends StatelessWidget {
             children: <Widget>[
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/jouer');
+                  Navigator.pushNamed(context, '/name');
                 },
                 child: Text('Jouer'),
               ),
