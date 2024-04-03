@@ -76,6 +76,7 @@ class NumberGuessingGameScreen extends StatefulWidget {
 }
 
 class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
+  final TextEditingController _guessController = TextEditingController();
   final _random = Random();
   late int _targetNumber;
   late int _maxNumber;
@@ -92,6 +93,14 @@ class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
   }
 
   void _startNewGame() {
+    _level = 1;
+    _maxNumber = _maxNumberForLevel();
+    _targetNumber = _random.nextInt(_maxNumber) + 1;
+    _userGuess = null;
+    _remainingAttempts = 5;
+  }
+
+  void _startNewLevel() {
     _maxNumber = _maxNumberForLevel();
     _targetNumber = _random.nextInt(_maxNumber) + 1;
     _userGuess = null;
@@ -105,11 +114,12 @@ class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
   void _checkGuess() {
     if (_userGuess != null) {
       _remainingAttempts--;
+      _guessController.clear();
       if (_userGuess == _targetNumber) {
         _resultText = 'Félicitations! Vous avez deviné le bon nombre ($_targetNumber)';
         _level++;
         _attemptsPerLevel += 1;
-        _startNewGame();
+        _startNewLevel();
       } else if (_remainingAttempts <= 0) {
         _resultText = 'Vous avez épuisé toutes vos tentatives. Le bon nombre était $_targetNumber.';
       } else if (_userGuess! < _targetNumber) {
@@ -126,7 +136,7 @@ class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
     String playerName = ModalRoute.of(context)?.settings.arguments as String? ?? '';
     return Scaffold(
       appBar: AppBar(
-        title: Text('Jeu de Devine le Nombre - Niveau $_level'),
+        title: Text('Jeu des nombres - Niveau $_level'),
       ),
       body: Center(
         child: Padding(
@@ -145,6 +155,7 @@ class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
               ),
               const SizedBox(height: 20.0),
               TextField(
+                controller: _guessController,
                 keyboardType: TextInputType.number,
                 onChanged: (value) {
                   setState(() {
@@ -167,13 +178,23 @@ class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
                 style: const TextStyle(fontSize: 20.0),
               ),
               if (_remainingAttempts <= 0)
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _startNewGame();
-                    });
-                  },
-                  child: const Text('Nouvelle Partie'),
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _startNewGame();
+                        });
+                      },
+                      child: const Text('Nouvelle Partie'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/');
+                      },
+                      child: const Text('Retour à l\'accueil'),
+                    ),
+                  ],
                 ),
             ],
           ),
