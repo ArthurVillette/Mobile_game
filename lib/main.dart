@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
+
         '/': (context) => const MyHomePage(title: 'Android Game'),
         '/name': (context) => const NameEntryScreen(),
         '/jouer': (context) => const NumberGuessingGameScreen(),
