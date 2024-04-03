@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/jouer': (context) =>  MyHomePage(title: 'Jouer'),
-        '/scores': (context) =>  SomeDataView(data: {'name': 'Arthur', 'age': 25}),
+        '/scores': (context) =>  SomeDataView(data: {'name': 'Arthur', 'age': 20}),
         '/regles': (context) =>  RulesPage(title: 'Règles'),
       },
     );
