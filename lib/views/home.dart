@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../game/devine_nombre.dart';
+import 'package:mobile_game/views/rules.dart';
+import 'package:mobile_game/views/scores.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -16,6 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _widgetOptions = <Widget>[
     const HomeScreen(),
     const NumberGuessingGameScreen(),
+
   ];
 
   @override
@@ -39,6 +42,15 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(bottom: 20.0),
+            child: Image.asset(
+              'lib/img/nb.png',
+              height: 200,
+              width: 200,
+              fit: BoxFit.contain,
+            ),
+          ),
           ButtonBar(
             alignment: MainAxisAlignment.center,
             children: <Widget>[

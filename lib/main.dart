@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_game/game/devine_nombre.dart';
 import 'package:mobile_game/views/home.dart';
+import 'package:mobile_game/views/rules.dart';
+import 'package:mobile_game/views/scores.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,9 +24,10 @@ class MyApp extends StatelessWidget {
         '/': (context) => const MyHomePage(title: 'Android Game'),
         '/name': (context) => const NameEntryScreen(),
         '/jouer': (context) => const NumberGuessingGameScreen(),
-        '/scores': (context) => const MyHomePage(title: 'Scores'),
-        '/regles': (context) => const MyHomePage(title: 'Règles'),
+        '/scores': (context) => const SomeDataView(data: {'name': 'Arthur', 'age': 25}),
+        '/regles': (context) => const RulesPages(title: 'Règles'),
       },
     );
   }
 }
+
