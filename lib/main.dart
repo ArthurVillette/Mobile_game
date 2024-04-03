@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const MyHomePage(title: 'Android Game'),
         '/name': (context) => const NameEntryScreen(),
         '/jouer': (context) => const NumberGuessingGameScreen(),
-        '/scores': (context) => const SomeDataView(data: {'name': 'Arthur', 'age': 25}),
-        '/regles': (context) => const RulesPages(title: 'Règles'),
+        '/scores': (context) => SomeDataView(data: const {'name': 'Arthur', 'age': 25}),
+        '/regles': (context) => RulesPage(title: 'Règles'),
       },
     );
   }
