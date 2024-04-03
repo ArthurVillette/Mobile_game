@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_game/game/devine_nombre.dart';
 import 'package:mobile_game/views/home.dart';
 import 'package:mobile_game/views/rules.dart';
 import 'package:mobile_game/views/scores.dart';
@@ -8,9 +9,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,13 +19,16 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Android Game'),
       initialRoute: '/',
       routes: {
-        '/jouer': (context) =>  MyHomePage(title: 'Jouer'),
-        '/scores': (context) =>  SomeDataView(data: {'name': 'Arthur', 'age': 20}),
-        '/regles': (context) =>  RulesPage(title: 'Règles'),
+
+        '/': (context) => const MyHomePage(title: 'Android Game'),
+        '/name': (context) => const NameEntryScreen(),
+        '/jouer': (context) => const NumberGuessingGameScreen(),
+        '/scores': (context) => const SomeDataView(data: {'name': 'Arthur', 'age': 25}),
+        '/regles': (context) => const RulesPages(title: 'Règles'),
       },
     );
   }
 }
+
