@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_game/views/home.dart';
 import 'package:mobile_game/views/rules.dart';
+import 'package:mobile_game/views/scores.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,9 +22,9 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage(title: 'Android Game'),
       initialRoute: '/',
       routes: {
-        '/jouer': (context) => const MyHomePage(title: 'Jouer'),
-        '/scores': (context) => const MyHomePage(title: 'Scores'),
-        '/regles': (context) => const RulesPage(),
+        '/jouer': (context) =>  MyHomePage(title: 'Jouer'),
+        '/scores': (context) =>  SomeDataView(data: {'name': 'Arthur', 'age': 25}),
+        '/regles': (context) =>  RulesPage(title: 'Règles'),
       },
     );
   }

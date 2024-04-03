@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_game/views/rules.dart';
+import 'package:mobile_game/views/scores.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -62,7 +63,7 @@ class HomeScreen extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(bottom: 20.0),
             child: Image.asset(
-              'lib/img/nb.jpg',
+              'lib/img/nb.png',
               height: 200,
               width: 200,
               fit: BoxFit.contain,
