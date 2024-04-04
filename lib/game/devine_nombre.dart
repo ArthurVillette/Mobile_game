@@ -117,11 +117,6 @@ class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
     await prefs.setInt(playerName, score); // Utilisation de setInt au lieu de setString
   }
 
-  Future<int> _getScore(String playerName) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(playerName) ?? 0; // Renvoyer 0 si aucune valeur n'est trouvée
-  }
-
   void _checkGuess() {
     if (_userGuess != null) {
       String playerName = ModalRoute.of(context)?.settings.arguments as String? ?? '';

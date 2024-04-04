@@ -32,19 +32,25 @@ class _ScoresPageState extends State<ScoresPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_scores == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    var sortedEntries = _scores!.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Scores'),
       ),
-      body: _scores != null && _scores!.isNotEmpty
+      body: _scores!.isNotEmpty
           ? ListView.builder(
-            itemCount: _scores!.length,
-            itemBuilder: (context, index) {
-              String playerName = _scores!.keys.toList()[index];
-              int score = _scores![playerName]!;
-              return ListTile(
-                title: Text(playerName),
-                subtitle: Text('Score: $score'),
+              itemCount: sortedEntries.length,
+              itemBuilder: (context, index) {
+                var entry = sortedEntries[index];
+                return ListTile(
+                  title: Text(entry.key),
+                  subtitle: Text('Score: ${entry.value}'),
           );
         },
       )
