@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -80,6 +80,7 @@ class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
   final _random = Random();
   late int _targetNumber;
   late int _maxNumber;
+  int _score = 0;
   int? _userGuess;
   String _resultText = '';
   int _level = 1;
@@ -111,17 +112,25 @@ class _NumberGuessingGameScreenState extends State<NumberGuessingGameScreen> {
     return 10 * _level;
   }
 
+  Future<void> _saveScore(String playerName, int score) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(playerName, score); // Utilisation de setInt au lieu de setString
+  }
+
   void _checkGuess() {
     if (_userGuess != null) {
+      String playerName = ModalRoute.of(context)?.settings.arguments as String? ?? '';
       _remainingAttempts--;
       _guessController.clear();
       if (_userGuess == _targetNumber) {
         _resultText = 'Félicitations! Vous avez deviné le bon nombre ($_targetNumber)';
         _level++;
         _attemptsPerLevel += 1;
+        _score += (_level * 10) - (_remainingAttempts * 2);
         _startNewLevel();
       } else if (_remainingAttempts <= 0) {
         _resultText = 'Vous avez épuisé toutes vos tentatives. Le bon nombre était $_targetNumber.';
+        _saveScore(playerName, _score);
       } else if (_userGuess! < _targetNumber) {
         _resultText = 'Le nombre est plus grand';
       } else {
